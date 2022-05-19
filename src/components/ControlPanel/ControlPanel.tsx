@@ -6,9 +6,10 @@ interface AppProps {
   title?: string;
   handleSwitch?: (event: boolean) => void;
   addBulb: () => void;
+  onSelect: (data: string) => void;
 }
 
-const ControlPanel: React.FC<AppProps> = ({ addBulb, handleSwitch }) => {
+const ControlPanel: React.FC<AppProps> = ({ addBulb, handleSwitch, onSelect }) => {
   return (
     <div className="container">
       <div className="lead">
@@ -24,8 +25,8 @@ const ControlPanel: React.FC<AppProps> = ({ addBulb, handleSwitch }) => {
           </button>
         </div>
         <div className="col-6">
-          <DropDown>
-          <option selected>Blink Pattern</option>
+          <DropDown onSelect={onSelect}>
+          <option defaultValue={'Blink Pattern'}>Blink Pattern</option>
           <option value="even">Even</option>
           <option value="random">Random</option>
           </DropDown>

@@ -4,10 +4,11 @@ import { Form } from "react-bootstrap";
 
 interface AppProps {
   title?: string;
+  checked?: 'on' | 'off';
   handleClick?: (event: boolean) => void;
 }
 
-export const Switch: React.FC<AppProps> = ({ title, handleClick }) => {
+export const Switch: React.FC<AppProps> = ({ checked, title, handleClick }) => {
   let switchInput = useRef<HTMLInputElement>(null);
   const onClick = () => {
     handleClick(switchInput.current.checked);
@@ -16,6 +17,7 @@ export const Switch: React.FC<AppProps> = ({ title, handleClick }) => {
     <>
       <Form.Switch
         ref={switchInput}
+        defaultChecked={checked === 'on'}
         type="switch"
         id="custom-switch"
         label="On | Off"
