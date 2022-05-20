@@ -8,40 +8,65 @@ interface AppProps {
   title?: string;
   activeCell?: ActiveColumnItem;
   handleSubmit: (state: ActiveColumnItem, submit?: boolean) => void;
+  handleRemove: (state: ActiveColumnItem) => void;
 }
 
-const BoardEditor: React.FC<AppProps> = ({ activeCell, title, handleSubmit }) => {
-    let state: ColumnItem = {
-        status: activeCell.item.status,
-        color: activeCell.item.color
-    };
+const BoardEditor: React.FC<AppProps> = ({
+  activeCell,
+  title,
+  handleRemove,
+  handleSubmit,
+}) => {
+  let state: ColumnItem = {
+    status: activeCell.item.status,
+    color: activeCell.item.color,
+  };
 
-    const handleSwitchClick = (clicked: boolean) => {
-        state.status = clicked ? 'on' : 'off';
-    };
+  const handleSwitchClick = (clicked: boolean) => {
+    state.status = clicked ? "on" : "off";
+  };
 
-    const clickSubmit = () => {
-        handleSubmit({
-            ...activeCell,
-            item: state,
-        }, true);    
-    };
+  const clickSubmit = () => {
+    handleSubmit(
+      {
+        ...activeCell,
+        item: state,
+      },
+      true
+    );
+  };
+
+  const clickRemove = () => {
+    handleRemove(activeCell);
+  };
   return (
     <Form>
       <h4>{title}</h4>
       <Form.Group className="mb-3">
-        <Switch handleClick={handleSwitchClick} checked={activeCell.item.status}/>
+        <Switch
+          handleClick={handleSwitchClick}
+          checked={activeCell.item.status}
+        />
       </Form.Group>
       <Form.Group className="mb-3">
-        <DropDown onSelect={(data) => state.color = data} defaultValue={activeCell.item.color}>
-          <option defaultValue={'Select Color'}>Select Color</option>
+        <DropDown
+          onSelect={(data) => (state.color = data)}
+          defaultValue={activeCell.item.color}
+        >
+          <option defaultValue={"Select Color"}>Select Color</option>
           <option value="red">Red</option>
           <option value="green">Green</option>
         </DropDown>
       </Form.Group>
-      <Button variant="danger" disabled={title.includes('Add')}>Remove</Button>{" "}
-      <Button variant="warning" onClick={() => handleSubmit(activeCell, false)}>Cancel</Button>{" "}
-      <Button variant="success" onClick={clickSubmit} className="saveBoard">{title.includes('Add') ? 'Save' : 'Edit'}</Button>{" "}
+      <Button variant="danger" disabled={title.includes("Add")} onClick={clickRemove} >
+        Remove
+      </Button>{" "}
+      <Button variant="warning" onClick={() => handleSubmit(activeCell, false)}>
+        Cancel
+      </Button>{" "}
+      <Button variant="success" onClick={clickSubmit} className="saveBoard">
+        {title.includes("Add") ? "Save" : "Edit"}
+      </Button>{" "}
     </Form>
   );
 };

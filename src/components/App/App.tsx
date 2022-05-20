@@ -2,7 +2,7 @@ import * as React from 'react';
 import '../app.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
-import {Board} from '../Board/Board';
+import {Board} from '../Board';
 import {ControlPanel} from '../ControlPanel';
 import { useState } from 'react';
 import { BoardEditor } from '../Board/BoardEditor';
@@ -118,6 +118,12 @@ export const App: React.FC = () => {
         setAddEditBulb('');
     };
 
+    const remove = (state: ActiveColumnItem) => {
+        cells[state.rowIndex].columns.splice(state.columnIndex, 1);
+        setCells(cells);
+        setAddEditBulb('');
+    };
+
     return (
         <div className="app-container">
             <div className="lead"><h1>Board Game</h1></div>
@@ -126,7 +132,7 @@ export const App: React.FC = () => {
                 <Card.Body>
                 { addEditBulb === '' ? 
                     <Board cells={cells} editCell={editCell} /> : 
-                    <BoardEditor title={addEditBulb === 'edit' ? 'Edit Bulb' : 'Add Bulb'} handleSubmit={handleSubmit} activeCell={activeCell} />}
+                    <BoardEditor title={addEditBulb === 'edit' ? 'Edit Bulb' : 'Add Bulb'} handleSubmit={handleSubmit} handleRemove={remove} activeCell={activeCell} />}
                 </Card.Body>
                 </Card>
                 </div>
