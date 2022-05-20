@@ -27,8 +27,8 @@ export const App: React.FC = () => {
     const [cells, setCells] = useState<CellItem[]>([]);
     const [activeCell, setActiveCell] = useState<ActiveColumnItem>({
         item: {
-            status: 'off',
-            color: ''
+            status: 'on',
+            color: 'red'
         },
         rowIndex: 0,
         columnIndex: 0
@@ -61,7 +61,12 @@ export const App: React.FC = () => {
 
     const handleBlink = (blinkPattern: string) => {
         if (blinkPattern === 'even') {
+            if(myInterval > 0) clearInterval(myInterval);
             const myIntval = window.setInterval(blinkEven, 2000);   
+            setMyInterval(myIntval);
+        } else if (blinkPattern === 'random') {
+            if(myInterval > 0) clearInterval(myInterval);
+            const myIntval = window.setInterval(blinkRandom, 2000);   
             setMyInterval(myIntval);
         } else {
             clearInterval(myInterval);
@@ -69,9 +74,9 @@ export const App: React.FC = () => {
     };
 
     const blinkEven = () => {
-        setCells(cells.map((cell) => {
+        setCells(cells.map((cell, rowIndex) => {
             cell.columns.map((column, index) => {
-                if ((index+2)%2 === 0) {
+                if ((index+rowIndex)%2 === 0) {
                     column.status = column.status === 'on' ? 'off' : 'on';   
                 }
                 return  column;
@@ -79,6 +84,14 @@ export const App: React.FC = () => {
             return cell;
         }));
         
+    };
+
+    const blinkRandom = () => {
+        setCells(cells.map((cell, rowIndex) => {
+            let selectedCell = cell.columns[Math.floor(Math.random() * cell.columns.length)];
+            selectedCell.status = selectedCell.status === 'on' ? 'off' : 'on';
+            return cell;
+        }));
     };
 
     const handleSubmit = (boardItem: ActiveColumnItem, submit: boolean) => {
