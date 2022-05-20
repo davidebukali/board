@@ -1,5 +1,5 @@
 .table-container {
-    height: 300px !important;
+    height: 350px !important;
 }
 
 table {
@@ -11,7 +11,7 @@ th, td {
     border-right:1px solid #999 !important;
     border-bottom:1px solid #999 !important;
     width: 100px;
-    height: 100px;
+    height: 90px;
     padding: 5px;
   }
 
