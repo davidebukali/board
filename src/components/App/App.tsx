@@ -24,16 +24,7 @@ export interface ActiveColumnItem {
 }
 
 export const App: React.FC = () => {
-    const [cells, setCells] = useState<CellItem[]>([{columns: [
-        {
-            status: 'on',
-            color: 'red',
-        },
-        {
-            status: 'on',
-            color: 'green',
-        },
-    ] }]);
+    const [cells, setCells] = useState<CellItem[]>([]);
     const [activeCell, setActiveCell] = useState<ActiveColumnItem>({
         item: {
             status: 'off',
@@ -43,8 +34,7 @@ export const App: React.FC = () => {
         columnIndex: 0
     });
     const [addEditBulb, setAddEditBulb] = useState<'add' | 'edit' | ''>('');
-    const maxRow = 3;
-    const maxColumn = 3;
+    const [myInterval, setMyInterval] = useState(0);
 
     const onOff = (event: boolean) => {
         setCells(cells.map((cell) => {
@@ -67,12 +57,28 @@ export const App: React.FC = () => {
             rowIndex: rowIndex,
             columnIndex: itemIndex
         });
-        // console.log(`Row ${rowIndex}`);
-        // console.log(`column ${itemIndex}`);
     };
 
-    const handleSelect = (blinkPattern: string) => {
-        console.log(blinkPattern);
+    const handleBlink = (blinkPattern: string) => {
+        if (blinkPattern === 'even') {
+            const myIntval = window.setInterval(blinkEven, 2000);   
+            setMyInterval(myIntval);
+        } else {
+            clearInterval(myInterval);
+        }
+    };
+
+    const blinkEven = () => {
+        setCells(cells.map((cell) => {
+            cell.columns.map((column, index) => {
+                if ((index+2)%2 === 0) {
+                    column.status = column.status === 'on' ? 'off' : 'on';   
+                }
+                return  column;
+            })
+            return cell;
+        }));
+        
     };
 
     const handleSubmit = (boardItem: ActiveColumnItem, submit: boolean) => {
@@ -125,7 +131,7 @@ export const App: React.FC = () => {
                 </Card>
                 </div>
             <div className="container mt-2">
-                <ControlPanel handleSwitch={onOff} addBulb={addBulb} onSelect={handleSelect} />
+                <ControlPanel handleSwitch={onOff} addBulb={addBulb} onSelect={handleBlink} />
             </div>
         </div>
     );

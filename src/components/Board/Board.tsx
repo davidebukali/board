@@ -14,7 +14,7 @@ export const Board: React.FC<AppProps> = ({ title, cells, editCell }) => {
   const [row, setRow] = useState([]);
 
   return <>
-    <h5>Click a square to edit</h5>
+    <h5>{cells.length ? "Click a square to edit" : "Click to Add a bulb"}</h5>
     <table>
       <tbody>
         {

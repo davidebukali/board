@@ -26,7 +26,7 @@ const ControlPanel: React.FC<AppProps> = ({ addBulb, handleSwitch, onSelect }) =
         </div>
         <div className="col-6">
           <DropDown onSelect={onSelect}>
-          <option defaultValue={'Blink Pattern'}>Blink Pattern</option>
+          <option defaultValue={'Blink Pattern'}>Select Blink Pattern</option>
           <option value="even">Even</option>
           <option value="random">Random</option>
           </DropDown>
