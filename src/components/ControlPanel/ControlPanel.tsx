@@ -20,7 +20,7 @@ const ControlPanel: React.FC<AppProps> = ({ addBulb, handleSwitch, onSelect }) =
       </div>
       <div className="row mb-3">
         <div className="col-6">
-          <button type="button" className="btn btn-secondary input-block-level form-control" onClick={addBulb}>
+          <button type="button" className="btn btn-secondary input-block-level form-control addBulb" onClick={addBulb}>
             Add Bulb
           </button>
         </div>

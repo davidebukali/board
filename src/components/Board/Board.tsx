@@ -16,7 +16,7 @@ export const Board: React.FC<AppProps> = ({ title, cells, editCell }) => {
   return <>
     <h5>{cells.length ? "Click a square to edit" : "Click to Add a bulb"}</h5>
     <table>
-      <tbody>
+      <tbody className="tableBody">
         {
           cells.map((row, index) => {
             return <BoardRow key={nanoid()} rowIndex={index} columns={row.columns} editCell={editCell} />

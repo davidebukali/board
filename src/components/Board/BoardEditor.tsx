@@ -41,7 +41,7 @@ const BoardEditor: React.FC<AppProps> = ({ activeCell, title, handleSubmit }) =>
       </Form.Group>
       <Button variant="danger" disabled={title.includes('Add')}>Remove</Button>{" "}
       <Button variant="warning" onClick={() => handleSubmit(activeCell, false)}>Cancel</Button>{" "}
-      <Button variant="success" onClick={clickSubmit}>{title.includes('Add') ? 'Save' : 'Edit'}</Button>{" "}
+      <Button variant="success" onClick={clickSubmit} className="saveBoard">{title.includes('Add') ? 'Save' : 'Edit'}</Button>{" "}
     </Form>
   );
 };
