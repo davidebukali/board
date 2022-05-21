@@ -7,9 +7,10 @@ interface AppProps {
   handleSwitch?: (event: boolean) => void;
   addBulb: () => void;
   onSelect: (data: string) => void;
+  saveConfig: () => void;
 }
 
-const ControlPanel: React.FC<AppProps> = ({ addBulb, handleSwitch, onSelect }) => {
+const ControlPanel: React.FC<AppProps> = ({ addBulb, handleSwitch, onSelect, saveConfig }) => {
   return (
     <div className="container">
       <div className="lead">
@@ -33,7 +34,7 @@ const ControlPanel: React.FC<AppProps> = ({ addBulb, handleSwitch, onSelect }) =
         </div>
       </div>
       <div className="row mb-3">
-        <button type="button" className="btn btn-primary">
+        <button type="button" className="btn btn-primary" onClick={() => {saveConfig()}}>
           Save Config
         </button>
       </div>

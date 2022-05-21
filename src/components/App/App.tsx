@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
 import {Board} from '../Board';
 import {ControlPanel} from '../ControlPanel';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BoardEditor } from '../Board/BoardEditor';
 import { Card } from 'react-bootstrap';
 
@@ -35,6 +35,12 @@ export const App: React.FC = () => {
     });
     const [addEditBulb, setAddEditBulb] = useState<'add' | 'edit' | ''>('');
     const [myInterval, setMyInterval] = useState(0);
+    useEffect(() => {
+        const cachedCells = JSON.parse(localStorage.getItem('cells'));
+        if (cachedCells) {
+            setCells(cachedCells);   
+        }
+    }, []);
 
     const onOff = (event: boolean) => {
         setCells(cells.map((cell) => {
@@ -137,6 +143,10 @@ export const App: React.FC = () => {
         setAddEditBulb('');
     };
 
+    const saveConfig = () => {
+        localStorage.setItem('cells', JSON.stringify(cells));
+    };
+
     return (
         <div className="app-container">
             <div className="lead"><h1>Board Game</h1></div>
@@ -150,7 +160,7 @@ export const App: React.FC = () => {
                 </Card>
                 </div>
             <div className="container mt-2">
-                <ControlPanel handleSwitch={onOff} addBulb={addBulb} onSelect={handleBlink} />
+                <ControlPanel handleSwitch={onOff} addBulb={addBulb} onSelect={handleBlink} saveConfig={saveConfig} />
             </div>
         </div>
     );
