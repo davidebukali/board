@@ -46,6 +46,7 @@ const BoardEditor: React.FC<AppProps> = ({
         <Switch
           handleClick={handleSwitchClick}
           checked={activeCell.item.status}
+          testid={"single-switch"}
         />
       </Form.Group>
       <Form.Group className="mb-3">
@@ -58,13 +59,13 @@ const BoardEditor: React.FC<AppProps> = ({
           <option value="green">Green</option>
         </DropDown>
       </Form.Group>
-      <Button variant="danger" disabled={title.includes("Add")} onClick={clickRemove} >
+      <Button variant="danger" disabled={title.includes("Add")} onClick={clickRemove} data-testid="remove-cell">
         Remove
       </Button>{" "}
       <Button variant="warning" onClick={() => handleSubmit(activeCell, false)}>
         Cancel
       </Button>{" "}
-      <Button variant="success" onClick={clickSubmit} className="saveBoard">
+      <Button variant="success" onClick={clickSubmit} data-testid="save-board">
         {title.includes("Add") ? "Save" : "Edit"}
       </Button>{" "}
     </Form>

@@ -17,12 +17,12 @@ const ControlPanel: React.FC<AppProps> = ({ addBulb, handleSwitch, onSelect, sav
         <h4>Control Panel</h4>
       </div>
       <div className="row mb-3">
-        <Switch handleClick={handleSwitch} />
+        <Switch handleClick={handleSwitch} testid={"app-switch"} />
       </div>
       <div className="row mb-3">
         <div className="col-6">
-          <button type="button" className="btn btn-secondary input-block-level form-control addBulb" onClick={addBulb}>
-            Add Bulb
+          <button type="button" className="btn btn-secondary input-block-level form-control" data-testid="add-cell" onClick={addBulb}>
+            Add Cell
           </button>
         </div>
         <div className="col-6">

@@ -95,7 +95,9 @@ export const App: React.FC = () => {
     const blinkRandom = () => {
         setCells(cells.map((cell, rowIndex) => {
             let selectedCell = cell.columns[Math.floor(Math.random() * cell.columns.length)];
-            selectedCell.status = selectedCell.status === 'on' ? 'off' : 'on';
+            if(selectedCell) {
+                selectedCell.status = selectedCell.status === 'on' ? 'off' : 'on';
+            }
             return cell;
         }));
     };

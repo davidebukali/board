@@ -13,7 +13,7 @@ export const DropDown: React.FC<AppProps> = ({ children, defaultValue, onSelect 
     onSelect(value);
   };
   return (
-    <Form.Select onChange={(event) => handleChange(event as any)} defaultValue={defaultValue ? defaultValue : null}>
+    <Form.Select onChange={(event) => handleChange(event as any)} defaultValue={defaultValue ? defaultValue : null} data-testid="dropdown-select">
       {children}
     </Form.Select>
   );
