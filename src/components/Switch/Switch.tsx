@@ -2,15 +2,14 @@ import * as React from "react";
 import { useRef } from "react";
 import { Form } from "react-bootstrap";
 
-interface AppProps {
-  title?: string;
+interface SwitchProps {
   checked?: 'on' | 'off';
   testid: string;
   handleClick?: (event: boolean) => void;
 }
 
-export const Switch: React.FC<AppProps> = ({ checked, title, testid, handleClick }) => {
-  let switchInput = useRef<HTMLInputElement>(null);
+export const Switch: React.FC<SwitchProps> = ({ checked, testid, handleClick }) => {
+  const switchInput = useRef<HTMLInputElement>(null);
   const onClick = () => {
     handleClick(switchInput.current.checked);
   };

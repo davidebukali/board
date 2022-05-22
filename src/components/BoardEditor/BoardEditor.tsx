@@ -1,17 +1,17 @@
 import * as React from "react";
 import { Button, Form } from "react-bootstrap";
-import { ActiveColumnItem, ColumnItem } from "../App";
-import { DropDown } from "../ControlPanel/DropDown";
-import { Switch } from "../ControlPanel/Switch";
+import { ActiveColumnItem, ColumnItem } from "../../types/boardCells";
+import { DropDown } from "../DropDown";
+import { Switch } from "../Switch";
 
-interface AppProps {
+interface BoardEditorProps {
   title?: string;
   activeCell?: ActiveColumnItem;
   handleSubmit: (state: ActiveColumnItem, submit?: boolean) => void;
   handleRemove: (state: ActiveColumnItem) => void;
 }
 
-const BoardEditor: React.FC<AppProps> = ({
+const BoardEditor: React.FC<BoardEditorProps> = ({
   activeCell,
   title,
   handleRemove,

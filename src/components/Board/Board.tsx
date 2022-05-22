@@ -1,20 +1,17 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { CellItem, ColumnItem } from '../App';
+import { CellItem, ColumnItem } from '../../types/boardCells';
 import { BoardRow } from './BoardRow';
 import { nanoid } from 'nanoid';
 
-interface AppProps {
-  title?: string
+interface BoardProps {
   cells: CellItem[];
   editCell: (item: ColumnItem, rowIndex: number, itemIndex: number) => void;
 }
 
-export const Board: React.FC<AppProps> = ({ title, cells, editCell }) => {
-  const [row, setRow] = useState([]);
-
+export const Board: React.FC<BoardProps> = ({ cells, editCell }) => {
   return <>
-    <h5>{cells.length ? "Click a square to edit" : "Click to Add a bulb"}</h5>
+    <h5>{cells.length ? "Click a square to edit" : "Click 'Add a bulb' button below"}</h5>
     <table>
       <tbody data-testid="table-body">
         {

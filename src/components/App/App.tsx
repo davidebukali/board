@@ -5,23 +5,10 @@ import 'bootstrap/dist/js/bootstrap.js';
 import {Board} from '../Board';
 import {ControlPanel} from '../ControlPanel';
 import { useEffect, useState } from 'react';
-import { BoardEditor } from '../Board/BoardEditor';
+import { BoardEditor } from '../BoardEditor/BoardEditor';
 import { Card } from 'react-bootstrap';
-
-export interface ColumnItem {
-    status: 'on' | 'off';
-    color: string;
-}
-
-export interface CellItem {
-    columns: ColumnItem[];
-}
-
-export interface ActiveColumnItem {
-    item: ColumnItem;
-    rowIndex: number;
-    columnIndex: number;
-}
+import { ActiveColumnItem, CellItem, ColumnItem } from '../../types/boardCells';
+import { addCellHelper, editCellHelper } from './utils';
 
 export const App: React.FC = () => {
     const [cells, setCells] = useState<CellItem[]>([]);
@@ -33,7 +20,7 @@ export const App: React.FC = () => {
         rowIndex: 0,
         columnIndex: 0
     });
-    const [addEditBulb, setAddEditBulb] = useState<'add' | 'edit' | ''>('');
+    const [display, setDisplay] = useState<'add' | 'edit' | 'view'>('view');
     const [myInterval, setMyInterval] = useState(0);
     useEffect(() => {
         const cachedCells = JSON.parse(localStorage.getItem('cells'));
@@ -52,12 +39,12 @@ export const App: React.FC = () => {
         }));
     };
 
-    const addBulb = () => {
-        setAddEditBulb('add');
+    const addCell = () => {
+        setDisplay('add');
     };
 
     const editCell = (item: ColumnItem, rowIndex: number, itemIndex: number) => {
-        setAddEditBulb('edit');
+        setDisplay('edit');
         setActiveCell({
             item,
             rowIndex: rowIndex,
@@ -103,46 +90,18 @@ export const App: React.FC = () => {
     };
 
     const handleSubmit = (boardItem: ActiveColumnItem, submit: boolean) => {
-        if (submit && addEditBulb === 'add') {
-            if (cells.length === 0) {
-                setCells([{columns: [
-                    boardItem.item
-                ] }]);
-            } else if (cells.length <= 3) {
-                for (let i = 0; i < cells.length; i++) {
-                    if (cells[i].columns.length <= 2) {
-                        cells[i].columns.push(boardItem.item);
-                        setCells(cells);
-                        break;
-                    }
-                    if (cells.length <= 2 && i === cells.length - 1) {
-                        cells.push({columns: [boardItem.item]});
-                        setCells(cells);
-                        break;
-                    }
-                }
-            }
-        } else if(addEditBulb === 'edit') {
-            setCells(cells.map((cell, index) => {
-                if(index === boardItem.rowIndex) {
-                    cell.columns.map((column, columnIndex) => {
-                        if(columnIndex === boardItem.columnIndex) {
-                            column.status = boardItem.item.status;
-                            column.color = boardItem.item.color;
-                        }
-                        return  column;
-                    })
-                }
-                return cell;
-            }));
+        if (submit && display === 'add') {
+            setCells(addCellHelper(cells, boardItem))
+        } else if(display === 'edit') {
+            setCells(editCellHelper(cells, boardItem));
         }
-        setAddEditBulb('');
+        setDisplay('view');
     };
 
     const remove = (state: ActiveColumnItem) => {
         cells[state.rowIndex].columns.splice(state.columnIndex, 1);
         setCells(cells);
-        setAddEditBulb('');
+        setDisplay('view');
     };
 
     const saveConfig = () => {
@@ -150,19 +109,19 @@ export const App: React.FC = () => {
     };
 
     return (
-        <div className="app-container">
-            <div className="lead"><h1>Board Game</h1></div>
+        <div className="w-50 mx-auto">
+            <div className="lead"><h1>Board</h1></div>
             <div className="table-container">
             <Card style={{ width: '100%', height: '100%'}}>
                 <Card.Body>
-                { addEditBulb === '' ? 
+                { display === 'view' ? 
                     <Board cells={cells} editCell={editCell} /> : 
-                    <BoardEditor title={addEditBulb === 'edit' ? 'Edit Bulb' : 'Add Bulb'} handleSubmit={handleSubmit} handleRemove={remove} activeCell={activeCell} />}
+                    <BoardEditor title={display === 'edit' ? 'Edit Cell' : 'Add Cell'} handleSubmit={handleSubmit} handleRemove={remove} activeCell={activeCell} />}
                 </Card.Body>
                 </Card>
-                </div>
+            </div>
             <div className="container mt-2">
-                <ControlPanel handleSwitch={onOff} addBulb={addBulb} onSelect={handleBlink} saveConfig={saveConfig} />
+                <ControlPanel handleSwitch={onOff} addCell={addCell} onSelect={handleBlink} saveConfig={saveConfig} />
             </div>
         </div>
     );
