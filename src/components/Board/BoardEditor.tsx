@@ -53,6 +53,7 @@ const BoardEditor: React.FC<AppProps> = ({
         <DropDown
           onSelect={(data) => (state.color = data)}
           defaultValue={activeCell.item.color}
+          testid={"cell-color"}
         >
           <option defaultValue={"Select Color"}>Select Color</option>
           <option value="red">Red</option>

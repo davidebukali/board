@@ -26,7 +26,7 @@ const ControlPanel: React.FC<AppProps> = ({ addBulb, handleSwitch, onSelect, sav
           </button>
         </div>
         <div className="col-6">
-          <DropDown onSelect={onSelect}>
+          <DropDown onSelect={onSelect} testid={"dropdown-select"}>
           <option defaultValue={'Blink Pattern'}>Select Blink Pattern</option>
           <option value="even">Even</option>
           <option value="random">Random</option>
@@ -34,7 +34,7 @@ const ControlPanel: React.FC<AppProps> = ({ addBulb, handleSwitch, onSelect, sav
         </div>
       </div>
       <div className="row mb-3">
-        <button type="button" className="btn btn-primary" onClick={() => {saveConfig()}}>
+        <button type="button" className="btn btn-primary" onClick={() => {saveConfig()}} data-testid="save-config">
           Save Config
         </button>
       </div>
